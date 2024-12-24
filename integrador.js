@@ -215,3 +215,67 @@ function borrarLibro(id) {
 //borrarLibro(idABorrar);
 //console.log(libros);
 
+//3) Gestión de Usuarios
+//a.Implementamos una función registrarUsuario(nombre, email) que agregue un nuevo usuario al array usuarios.
+
+let nombre = prompt("Ingrese su nombre ");
+let email = prompt("ingrese su email: ")
+function registrarUsuario(nombre, email){
+    let usu = {
+        id : 0,
+        nombre,
+        email,
+        librosPrestados: []
+    }
+    usuarios.push(usu);
+}
+
+registrarUsuario(nombre, email);
+
+//b. Implementamos una función mostrarTodosLosUsuarios() que me devuelva el array completo de usuarios
+
+let mostrarTodosLosUsuarios= usuarios => console.log(usuarios);
+
+//mostrarTodosLosUsuarios(usuarios);
+
+//c. Creamos la función buscarUsuario(email) que devuelva la información de un usuario dado su email.
+let existeUsuario = prompt ("Ingrese el email del usuaria a buscar: ");
+function buscarUsuario(email){   
+    for (let i = 0; i < usuarios.length; i++) { 
+        if (usuarios[i].email.toLowerCase() === email.toLowerCase()){ 
+            console.log("el usuaria se ha encontrado: id: "+ usuarios[i].id+"- nombre: "+usuarios[i].nombre+"- email: "+usuarios[i].email+"- libros prestados: "+usuarios[i].librosPrestados);
+        }
+    }console.log("El usuario no se ha encontrado");
+}
+
+buscarUsuario(existeUsuario)
+
+//d. Implementamos la función borrarUsuario(nombre, email) que elimine el usuario seleccionado.
+
+function borrarUsuario(nombre, email) {
+    let indice = -1;
+    for (let i = 0; i < usuarios.length; i++) {
+        if (usuarios[i].nombre === nombre && usuarios[i].email === email) {
+            indice = i;
+            break;
+        }
+    }
+    if (indice !== -1) {
+        usuarios.splice(indice, 1);  // Elimina el usuario en el índice encontrado
+        return true;
+    } else {
+        return false;
+    }
+}
+
+let nombreABorrar = prompt("Ingrese el nombre del usuario a borrar: ");
+let emailABorrar = prompt("Ingrese el email del usuario a borrar: ");
+
+// if (borrarUsuario(nombreABorrar, emailABorrar)) {
+//     console.log("Usuario borrado exitosamente.");
+// } else {
+//     console.log("Usuario no encontrado.");
+// }
+
+//console.log("Lista de usuarios actualizada:");
+//console.log(usuarios);
