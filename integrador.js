@@ -279,3 +279,112 @@ let emailABorrar = prompt("Ingrese el email del usuario a borrar: ");
 
 //console.log("Lista de usuarios actualizada:");
 //console.log(usuarios);
+
+//4) Sistema de Préstamos
+//a. Desarrollar una función prestarLibro(idLibro, idUsuario) 
+//que marque un libro como no disponible y lo agregue a la lista de libros prestados del usuario.
+
+//let idLibro = prompt("Ingrese el id del libro que desea: ");
+//let idUsuario = prompt ("Ingrese su id de usuario: ");
+
+function prestarLibro(idLibro, idUsuario) { 
+    let libroEncontrado = false; 
+    let usuarioEncontrado = false; 
+    let libroIndex; 
+    let usuarioIndex; 
+    for (let i = 0; i < libros.length; i++) { 
+        if (libros[i].id == idLibro && libros[i].disponible) { 
+            libroEncontrado = true; 
+            libroIndex = i; 
+            break; 
+        } 
+    } 
+    
+    if (libroEncontrado) { 
+        for (let j = 0; j < usuarios.length; j++) { 
+            if (usuarios[j].id == idUsuario) { 
+                usuarioEncontrado = true; 
+                usuarioIndex = j; 
+                break; 
+            } 
+        } 
+    } 
+    
+    if (libroEncontrado && usuarioEncontrado) { 
+        libros[libroIndex].disponible = false; 
+        usuarios[usuarioIndex].librosPrestados.push(idLibro); 
+        console.log("Libro prestado exitosamente.");
+    } else { 
+        console.log("No se pudo prestar el libro."); 
+    } 
+} 
+
+//prestarLibro(idLibro, idUsuario); 
+//console.log("Lista de libros actualizada:");
+
+//5) Crear una función generarReporteLibros()
+
+function generarReporteLibros(libros){
+    //Cantidad total de libros.
+    let totalLibros = libros.length;
+    console.log(totalLibros);
+
+    //Cantidad de libros prestados.
+    let cantLibrosPrestados = libros.filter(libros => libros.disponible).length;
+    console.log(cantLibrosPrestados);
+
+    //Cantidad de libros por género.
+    const librosPorGenero = libros.reduce((generos, libro) => {
+        generos[libro.genero] = (generos[libro.genero] || 0) + 1;
+        return generos;
+    }, {});
+    console.log(librosPorGenero);
+
+    //Libro más nuevo
+    let masNuevo = libros.reduce((nuevo, libro) => {
+        return (libro.anio > nuevo.anio) ? libro : nuevo;
+    }, libros[0]);
+    
+    console.log(masNuevo);
+
+    //Libro más antiguo
+    let masAntiguo = libros.reduce((viejo, libro) => {
+        return (libro.anio < viejo.anio) ? libro : viejo;
+    }, libros[0]);
+    
+    console.log(masAntiguo);
+    
+    
+}
+
+console.log(generarReporteLibros(libros));
+
+//8. Manejo de Cadenas
+//a. Crear una función normalizarDatos() que utilice métodos de strings para:
+function normalizarDatos(){
+    //Convertir todos los títulos a mayúsculas.
+    let todoAMayusculas = libros.forEach(libro => { libro.titulo = libro.titulo.toUpperCase()
+    });    
+    //console.log(todoAMayusculas);
+    //console.log(libros)
+
+    //Eliminar espacios en blanco al inicio y final de los nombres de autores.
+    let eliminarEspacios = libros.forEach(libro => { libro.autor = libro.autor.trim();         
+    }); return libros;
+    //console.log(eliminarEspacios); 
+
+    //Formatear los emails de los usuarios a minúsculas.
+    function todoAMinusculas(usuarios) { 
+        usuarios.forEach(usuarios => { 
+            usuarios.email = usuarios.email.toLowerCase(); 
+        }); return usuarios; 
+    }
+
+    console.log(todoAMinusculas(usuarios))
+
+}
+
+//console.log(normalizarDatos());
+
+//9) Interfaz de Usuario por Consola
+
