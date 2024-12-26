@@ -71,7 +71,7 @@ let libro8 = {
     autor: "Eduardo Galeano",
     anio: 2010,
     genero: "Reportaje",
-    disponible: true
+    disponible: false
 };
 
 let libro9 = {
@@ -85,7 +85,7 @@ let libro9 = {
 
 let libro10 = {
     id: 8585,
-    titulo: "Las Olas",
+    titulo: " Las Olas ",
     autor: "Virginia Woolf",
     anio: 2013,
     genero: "Novela",
@@ -148,13 +148,10 @@ function agregarLibro(id, titulo, autor, anio, genero){
     libros.push(libro);
 }
 
-//console.log(agregarLibro(5555,"el raton perz","fulano",1900,"ficcion"));
-//console.log(libros);
-
 //b.Crear una función buscarLibro(criterio, valor) que permita buscar libros por título, 
 // autor o género utilizando el algoritmo de búsqueda lineal.
 
-//let busqueda = prompt("ingrese el titulo a buscar: ");
+
 function buscarLibro(libros, busqueda) { 
     for (let i = 0; i < libros.length; i++) { 
         if (libros[i].titulo.toLowerCase() === busqueda.toLowerCase()){ 
@@ -162,15 +159,6 @@ function buscarLibro(libros, busqueda) {
         }
     }return -1;
 }
-
-//let resultado = buscarLibro(libros,busqueda);
-
-// if (resultado !== -1) { 
-//     console.log(`Libro encontrado en el índice: ${resultado}`); 
-//     console.log(`Título: ${libros[resultado].titulo}, Autor: ${libros[resultado].autor}`); 
-// } else { 
-//     console.log('Libro no encontrado'); 
-// }
 
 //c. Desarrollar una función ordenarLibros(criterio) que ordene los libros por título o año 
 // utilizando el algoritmo de ordenamiento burbuja y luego muestre los libros ordenados en la consola.
@@ -188,12 +176,7 @@ function ordenarLibros(libros){
     }
 }
 
-//let librosOrdenados = ordenarLibros(libros);
-//console.log(libros)
-
 //d. Desarrollar una función borrarLibro(id) que elimine el libro que se le pase por parámetro.
-
-let idABorrar = parseInt(prompt("Ingrese el ID del libro a borrar: "));
 
 function borrarLibro(id) {
     let indice = -1;
@@ -211,15 +194,10 @@ function borrarLibro(id) {
     }
 }
 
-
-//borrarLibro(idABorrar);
-//console.log(libros);
-
 //3) Gestión de Usuarios
 //a.Implementamos una función registrarUsuario(nombre, email) que agregue un nuevo usuario al array usuarios.
 
-let nombre = prompt("Ingrese su nombre ");
-let email = prompt("ingrese su email: ")
+
 function registrarUsuario(nombre, email){
     let usu = {
         id : 0,
@@ -230,16 +208,12 @@ function registrarUsuario(nombre, email){
     usuarios.push(usu);
 }
 
-registrarUsuario(nombre, email);
-
 //b. Implementamos una función mostrarTodosLosUsuarios() que me devuelva el array completo de usuarios
 
 let mostrarTodosLosUsuarios= usuarios => console.log(usuarios);
 
-//mostrarTodosLosUsuarios(usuarios);
-
 //c. Creamos la función buscarUsuario(email) que devuelva la información de un usuario dado su email.
-let existeUsuario = prompt ("Ingrese el email del usuaria a buscar: ");
+
 function buscarUsuario(email){   
     for (let i = 0; i < usuarios.length; i++) { 
         if (usuarios[i].email.toLowerCase() === email.toLowerCase()){ 
@@ -247,8 +221,6 @@ function buscarUsuario(email){
         }
     }console.log("El usuario no se ha encontrado");
 }
-
-buscarUsuario(existeUsuario)
 
 //d. Implementamos la función borrarUsuario(nombre, email) que elimine el usuario seleccionado.
 
@@ -268,24 +240,9 @@ function borrarUsuario(nombre, email) {
     }
 }
 
-let nombreABorrar = prompt("Ingrese el nombre del usuario a borrar: ");
-let emailABorrar = prompt("Ingrese el email del usuario a borrar: ");
-
-// if (borrarUsuario(nombreABorrar, emailABorrar)) {
-//     console.log("Usuario borrado exitosamente.");
-// } else {
-//     console.log("Usuario no encontrado.");
-// }
-
-//console.log("Lista de usuarios actualizada:");
-//console.log(usuarios);
-
 //4) Sistema de Préstamos
 //a. Desarrollar una función prestarLibro(idLibro, idUsuario) 
 //que marque un libro como no disponible y lo agregue a la lista de libros prestados del usuario.
-
-//let idLibro = prompt("Ingrese el id del libro que desea: ");
-//let idUsuario = prompt ("Ingrese su id de usuario: ");
 
 function prestarLibro(idLibro, idUsuario) { 
     let libroEncontrado = false; 
@@ -319,45 +276,128 @@ function prestarLibro(idLibro, idUsuario) {
     } 
 } 
 
-//prestarLibro(idLibro, idUsuario); 
-//console.log("Lista de libros actualizada:");
+//b.Implementamos una función devolverLibro(idLibro, idUsuario) 
+//que marque un libro como disponible y lo elimine de la lista de libros prestados del usuario.
+
+
+function devolverLibro(idLibro, idUsuario) { 
+    let libroEncontrado = false; 
+    let usuarioEncontrado = false; 
+    let libroIndex; 
+    let usuarioIndex; 
+    for (let i = 0; i < libros.length; i++) { 
+        if (libros[i].id == idLibro && !libros[i].disponible) { 
+            libroEncontrado = true; 
+            libroIndex = i; 
+            break; 
+        } 
+    } 
+    
+    if (libroEncontrado) { 
+        for (let j = 0; j < usuarios.length; j++) { 
+            if (usuarios[j].id == idUsuario) { 
+                usuarioEncontrado = true; 
+                usuarioIndex = j; 
+                break; 
+            } 
+        } 
+    } 
+    
+    if (libroEncontrado && usuarioEncontrado) { 
+        libros[libroIndex].disponible = true; 
+        let libroPrestadoIndex = usuarios[usuarioIndex].librosPrestados.indexOf(idLibro); 
+        if (libroPrestadoIndex !== -1) { 
+            usuarios[usuarioIndex].librosPrestados.splice(libroPrestadoIndex, 1); 
+            console.log("Libro devuelto exitosamente."); 
+        } else { 
+            console.log("El usuario no tiene este libro prestado."); 
+        } 
+    } else { 
+        console.log("No se pudo reingresar el libro.");
+    } 
+}
+
 
 //5) Crear una función generarReporteLibros()
 
 function generarReporteLibros(libros){
     //Cantidad total de libros.
     let totalLibros = libros.length;
-    console.log(totalLibros);
+    console.log("Cantidad total de libros " +totalLibros);
 
     //Cantidad de libros prestados.
     let cantLibrosPrestados = libros.filter(libros => libros.disponible).length;
-    console.log(cantLibrosPrestados);
+    console.log("Cantidad de libros prestados " +cantLibrosPrestados);
 
     //Cantidad de libros por género.
     const librosPorGenero = libros.reduce((generos, libro) => {
         generos[libro.genero] = (generos[libro.genero] || 0) + 1;
         return generos;
     }, {});
+    console.log("Cantidad de libros por género: ")
     console.log(librosPorGenero);
 
     //Libro más nuevo
     let masNuevo = libros.reduce((nuevo, libro) => {
         return (libro.anio > nuevo.anio) ? libro : nuevo;
     }, libros[0]);
-    
+    console.log("libro mas nuevo: ")
     console.log(masNuevo);
 
     //Libro más antiguo
     let masAntiguo = libros.reduce((viejo, libro) => {
         return (libro.anio < viejo.anio) ? libro : viejo;
     }, libros[0]);
-    
+    console.log("libro mas antiguo: ")
     console.log(masAntiguo);
     
     
 }
 
-console.log(generarReporteLibros(libros));
+//6. Identificación Avanzada de libros
+//a.Implementamos una función librosConPalabrasEnTitulo() 
+// que identifique y muestre todos los libros cuyo título contiene más de una palabra 
+// (no títulos que contengan números ni otros caracteres).
+//b.La función debe devolver un array con los títulos de esos libros y mostrarlo en la consola.
+
+function librosConPalabrasEnTitulo() { 
+    let librosFiltrados = libros.filter(libro => { 
+        let regex = /^[a-zA-Z\s]+$/; 
+        return regex.test(libro.titulo) && libro.titulo.trim().split(/\s+/).length > 1; 
+    }); 
+    let titulos = librosFiltrados.map(libro => libro.titulo); 
+    return titulos; 
+} 
+
+//7) Cálculos Estadísticos
+//a.Desarrollar una función calcularEstadisticas() que utilice el objeto Math para calcular y mostrar:
+function calcularEstadisticas() { 
+    //Promedio de años de publicación de los libros.
+    let totalAnios = libros.reduce((sum, libro) => sum + libro.anio, 0);
+    let promedioAnios = totalAnios / libros.length;
+
+    //Año de publicación más frecuente.
+    let frecuencias = {};
+    libros.forEach(libro => {
+    if (frecuencias[libro.anio]) {
+        frecuencias[libro.anio]++;
+    } else {
+        frecuencias[libro.anio] = 1;
+    }
+});
+    //Object.keys devuelve un arreglo con los nombres de las propiedades de un objeto
+    let anioFrecuente = Object.keys(frecuencias).reduce((a, b) => frecuencias[a] > frecuencias[b] ? a : b);
+
+    //Diferencia en años entre el libro más antiguo y el más nuevo.
+    let anioMasAntiguo = Math.min(...libros.map(libro => libro.anio));
+    let anioMasNuevo = Math.max(...libros.map(libro => libro.anio));
+    let diferenciaAnios = anioMasNuevo - anioMasAntiguo;
+
+    console.log(`Promedio de años de publicación: ${promedioAnios.toFixed(2)}`); 
+    console.log(`Año de publicación más frecuente: ${anioFrecuente}`); 
+    console.log(`Diferencia en años entre el libro más antiguo y el más nuevo: ${diferenciaAnios}`)
+}
+
 
 //8. Manejo de Cadenas
 //a. Crear una función normalizarDatos() que utilice métodos de strings para:
@@ -365,26 +405,145 @@ function normalizarDatos(){
     //Convertir todos los títulos a mayúsculas.
     let todoAMayusculas = libros.forEach(libro => { libro.titulo = libro.titulo.toUpperCase()
     });    
-    //console.log(todoAMayusculas);
-    //console.log(libros)
-
+    console.log(todoAMayusculas);
+    
     //Eliminar espacios en blanco al inicio y final de los nombres de autores.
     let eliminarEspacios = libros.forEach(libro => { libro.autor = libro.autor.trim();         
-    }); return libros;
-    //console.log(eliminarEspacios); 
+    });
+    console.log(eliminarEspacios);
+    console.log(libros);
 
     //Formatear los emails de los usuarios a minúsculas.
     function todoAMinusculas(usuarios) { 
         usuarios.forEach(usuarios => { 
             usuarios.email = usuarios.email.toLowerCase(); 
-        }); return usuarios; 
+        });
     }
-
-    console.log(todoAMinusculas(usuarios))
+    console.log(todoAMinusculas(usuarios));
+    console.log(usuarios);
 
 }
 
-//console.log(normalizarDatos());
-
 //9) Interfaz de Usuario por Consola
+//a. Implementamos una función menuPrincipal() que muestra un menú de opciones al usuario y 
+//permite interactuar con el sistema utilizando prompt().
+//b.El menú incluye opciones para todas las funcionalidades anteriores.
 
+function menuPrincipal(){
+    let idLibro;
+    let idUsuario;
+    console.log("TAREAS DISPONIBLES");
+    console.log("1.Agregar un libro");
+    console.log("2.Buscar un libro (por su titulo)");
+    console.log("3.Ordenar libros");
+    console.log("4.Borrar un libro (necesita id del libro)");
+    console.log("5.Registrar usuario");
+    console.log("6.Ver todos los usuarios");
+    console.log("7.Buscar usuario (por su email)");
+    console.log("8.Borrar usuario");
+    console.log("9.Prestar libro");
+    console.log("10.Devolver libro");
+    console.log("11.Ver reporte de libros");
+    console.log("12.Mostrar todos los libros cuyo título contiene más de una palabra (no contienen números ni otros caracteres).");
+    console.log("13.Ver estadisticas de libros");
+    console.log("14.Normalizar los datos alfanumericos");
+    let opcion = prompt("Que tarea desea realizar? ");  
+
+    switch (opcion){
+        case "1":
+            let idaAgregar = prompt("ingrese el id del libro que desea agregar: ");
+            let libroaAgregar = prompt("ingrese el titulo del libro que desea agregar: ");
+            let autoraAgregar = prompt("ingrese el nombre de autor del libro que desea agregar: ");
+            let anioaAgregar = prompt("ingrese el año del libro que desea agregar: ");
+            let generoaAgregar = prompt("ingrese el genero del libro que desea agregar: ");
+            console.log(agregarLibro(idaAgregar,libroaAgregar, autoraAgregar, anioaAgregar, generoaAgregar));
+            console.log(libros);
+            break;
+        case "2":
+            let busqueda = prompt("ingrese el titulo a buscar: ");
+            let resultado = buscarLibro(libros,busqueda);
+
+            if (resultado !== -1) { 
+                console.log(`Libro encontrado en el índice: ${resultado}`); 
+                console.log(`Título: ${libros[resultado].titulo}, Autor: ${libros[resultado].autor}`); 
+            } else { 
+                console.log('Libro no encontrado'); 
+            }
+            break;
+        case "3":
+            ordenarLibros(libros);
+            console.log(libros)
+            break;
+        case "4":
+            let idABorrar = parseInt(prompt("Ingrese el ID del libro a borrar: "));
+            borrarLibro(idABorrar);
+            console.log(libros);
+            break;
+        case"5":
+            let nombre = prompt("Ingrese su nombre ");
+            let email = prompt("ingrese su email: ");
+            registrarUsuario(nombre, email);
+            console.log(usuarios);
+            break;
+        case "6":
+            mostrarTodosLosUsuarios(usuarios);
+            break;
+        case "7":
+            let existeUsuario = prompt ("Ingrese el email del usuaria a buscar: ");
+            buscarUsuario(existeUsuario);
+            break;
+        case "8":
+            let nombreABorrar = prompt("Ingrese el nombre del usuario a borrar: ");
+            let emailABorrar = prompt("Ingrese el email del usuario a borrar: ");
+
+            if (borrarUsuario(nombreABorrar, emailABorrar)) {
+                console.log("Usuario borrado exitosamente.");
+            } else {
+                console.log("Usuario no encontrado.");
+            }
+            console.log("Lista de usuarios actualizada:");
+            console.log(usuarios);
+            break;
+        case "9":
+            idLibro = prompt("Ingrese el id del libro que desea: ");
+            idUsuario = prompt ("Ingrese su id de usuario: ");
+            prestarLibro(idLibro, idUsuario); 
+            console.log("Lista de libros actualizada:");
+            console.log(libros);
+            console.log("Lista de usuarios actualizada:");
+            console.log(usuarios);            
+            break;
+        case "10":
+            idLibro = parseInt(prompt("Ingrese el id del libro que desea devolver: "));
+            idUsuario = parseInt(prompt ("Ingrese su id de usuario: "));
+            devolverLibro(idLibro,idUsuario);
+            console.log("Lista de libros actualizada:");
+            console.log(libros);
+            console.log("Lista de usuarios actualizada:");
+            console.log(usuarios);
+            break;
+        case "11":
+            console.log(generarReporteLibros(libros));
+            break;
+        case "12":
+            console.log(librosConPalabrasEnTitulo());
+            break;
+        case "13":
+            calcularEstadisticas();
+            break;
+        case "14":
+            console.log(normalizarDatos());
+        default:
+            console.log("Por favor ingrese una opcion valida");
+    }
+}
+
+//Empleamos un ciclo while para que el usuaria realize las acciones que crea necesarias, 
+//es decir, para que la funcion menuPrincipal() pueda ejecutarse mas de una vez antes de acabar el programa (si se cree necesario).
+console.log("BIENVENIDO");
+let continuar = prompt("¿Desea realizar una acción? (si/no): ") === "si";
+
+while (continuar) {
+    menuPrincipal();
+    continuar = prompt("¿Desea realizar otra acción? (si/no): ") === "si";
+}

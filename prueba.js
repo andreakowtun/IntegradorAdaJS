@@ -83,7 +83,7 @@ let libro9 = {
 
 let libro10 = {
     id: 8585,
-    titulo: "Las Olas",
+    titulo: "Olas",
     autor: " Virginia Woolf ",
     anio: 2013,
     genero: "Novela",
@@ -132,27 +132,45 @@ let usuario5={
 
 let usuarios = [usuario1, usuario2, usuario3, usuario4, usuario5];
 
-function normalizarDatos(){
-    //Convertir todos los títulos a mayúsculas.
-    let todoAMayusculas = libros.forEach(libro => { libro.titulo = libro.titulo.toUpperCase()
-    });    
-    //console.log(todoAMayusculas);
-    //console.log(libros)
-
-    //Eliminar espacios en blanco al inicio y final de los nombres de autores.
-    let eliminarEspacios = libros.forEach(libro => { libro.autor = libro.autor.trim();         
-    }); return libros;
-    //console.log(eliminarEspacios); 
-
-    //Formatear los emails de los usuarios a minúsculas.
-    function todoAMinusculas(usuarios) { 
-        usuarios.forEach(usuarios => { 
-            usuarios.email = usuarios.email.toLowerCase(); 
-        }); return usuarios; 
-    }
-
-    console.log(todoAMinusculas(usuarios))
-
+function devolverLibro(idLibro, idUsuario) { 
+    let libroEncontrado = false; 
+    let usuarioEncontrado = false; 
+    let libroIndex; 
+    let usuarioIndex; 
+    for (let i = 0; i < libros.length; i++) { 
+        if (libros[i].id == idLibro && !libros[i].disponible) { 
+            libroEncontrado = true; 
+            libroIndex = i; 
+            break; 
+        } 
+    } 
+    
+    if (libroEncontrado) { 
+        for (let j = 0; j < usuarios.length; j++) { 
+            if (usuarios[j].id == idUsuario) { 
+                usuarioEncontrado = true; 
+                usuarioIndex = j; 
+                break; 
+            } 
+        } 
+    } 
+    
+    if (libroEncontrado && usuarioEncontrado) { 
+        libros[libroIndex].disponible = true; 
+        let libroPrestadoIndex = usuarios[usuarioIndex].librosPrestados.indexOf(idLibro); 
+        if (libroPrestadoIndex !== -1) { 
+            usuarios[usuarioIndex].librosPrestados.splice(libroPrestadoIndex, 1); 
+            console.log("Libro devuelto exitosamente."); 
+        } else { 
+            console.log("El usuario no tiene este libro prestado."); 
+        } 
+    } else { 
+        console.log("No se pudo reingresar el libro.");
+    } 
 }
 
-console.log(normalizarDatos());
+devolverLibro(5234,5656);
+console.log("Lista de libros actualizada:");
+console.log(usuarios);
+console.log(libros);
+
