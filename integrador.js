@@ -1,5 +1,4 @@
-//1) Creamos un array de objetos para almacenar informacion de 10 libros y otro para almacenar informacion de usuarios.
-
+//1) Creamos un array de objetos para almacenar informacion de 10 libros
 const prompt=require("prompt-sync")();
 
 let libro1 = {
@@ -54,7 +53,7 @@ let libro6={
     anio: 1997,
     genero: "Ficcion",
     disponible: false
-}
+};
 
 let libro7 = {
     id: 5234,
@@ -103,39 +102,39 @@ let usuario1 ={
     nombre: "Pablo Gimenez",
     email: "pabloG@gmail.com",
     librosPrestados: [5234, 8585]
-}
+};
 
 let usuario2={
     id:6662,
     nombre: "Analia Perez",
     email: "AnaP@gmail.com",
     librosPrestados: [1234, 7777]
-}
+};
 
 let usuario3={
     id:1515,
     nombre: "Pedro Juarez",
     email: "pedroJuarezG@gmail.com",
     librosPrestados: [2222, 8585]
-}
+};
 
 let usuario4={
     id:9494,
     nombre: "Belen Torres",
     email: "belTorres@gmail.com",
     librosPrestados: [4545]
-}
+};
 
 let usuario5={
     id:6363,
     nombre: "Tamara Frank",
     email: "tamiFrank@gmail.com",
     librosPrestados: [2233,2525]
-}
+};
 
 let usuarios = [usuario1, usuario2, usuario3, usuario4, usuario5];
 
-//2) a.Implementar una función agregarLibro(id, titulo, autor, anio, genero) que agregue un nuevo libro al array libros.
+//2) a.Implementamos una función agregarLibro(id, titulo, autor, anio, genero) que agregue un nuevo libro al array libros.
 
 function agregarLibro(id, titulo, autor, anio, genero){
     let libro = {
@@ -148,9 +147,7 @@ function agregarLibro(id, titulo, autor, anio, genero){
     libros.push(libro);
 }
 
-//b.Crear una función buscarLibro(criterio, valor) que permita buscar libros por título, 
-// autor o género utilizando el algoritmo de búsqueda lineal.
-
+//b.Creamos una función buscarLibro(libros, busqueda) que permita buscar libros por título, autor o género utilizando el algoritmo de búsqueda lineal.
 
 function buscarLibro(libros, busqueda) { 
     for (let i = 0; i < libros.length; i++) { 
@@ -160,8 +157,8 @@ function buscarLibro(libros, busqueda) {
     }return -1;
 }
 
-//c. Desarrollar una función ordenarLibros(criterio) que ordene los libros por título o año 
-// utilizando el algoritmo de ordenamiento burbuja y luego muestre los libros ordenados en la consola.
+//c. La siguiente es una función ordenarLibros(libros) que ordena los libros por título 
+// utilizando el algoritmo de ordenamiento burbuja y luego muestra los libros ordenados en la consola.
 
 function ordenarLibros(libros){
     //orden Bubble sort
@@ -170,13 +167,13 @@ function ordenarLibros(libros){
             if (libros[j].titulo.toLowerCase() > libros[j+1].titulo.toLowerCase()){
                 let temp = libros[j];
                 libros[j]=libros[j+1];
-                libros[j+1]=temp
+                libros[j+1]=temp;
             }
         }
     }
 }
 
-//d. Desarrollar una función borrarLibro(id) que elimine el libro que se le pase por parámetro.
+//d. Desarrollamos una función borrarLibro(id) que alimina el libro que se le pase por parámetro.
 
 function borrarLibro(id) {
     let indice = -1;
@@ -197,7 +194,6 @@ function borrarLibro(id) {
 //3) Gestión de Usuarios
 //a.Implementamos una función registrarUsuario(nombre, email) que agregue un nuevo usuario al array usuarios.
 
-
 function registrarUsuario(nombre, email){
     let usu = {
         id : 0,
@@ -214,12 +210,8 @@ let mostrarTodosLosUsuarios= usuarios => console.log(usuarios);
 
 //c. Creamos la función buscarUsuario(email) que devuelva la información de un usuario dado su email.
 
-function buscarUsuario(email){   
-    for (let i = 0; i < usuarios.length; i++) { 
-        if (usuarios[i].email.toLowerCase() === email.toLowerCase()){ 
-            console.log("el usuaria se ha encontrado: id: "+ usuarios[i].id+"- nombre: "+usuarios[i].nombre+"- email: "+usuarios[i].email+"- libros prestados: "+usuarios[i].librosPrestados);
-        }
-    }console.log("El usuario no se ha encontrado");
+function buscarUsuario(email) { 
+    return usuarios.find(usuario => usuario.email === email);
 }
 
 //d. Implementamos la función borrarUsuario(nombre, email) que elimine el usuario seleccionado.
@@ -241,8 +233,8 @@ function borrarUsuario(nombre, email) {
 }
 
 //4) Sistema de Préstamos
-//a. Desarrollar una función prestarLibro(idLibro, idUsuario) 
-//que marque un libro como no disponible y lo agregue a la lista de libros prestados del usuario.
+//a. Desarrollar una función prestarLibro(idLibro, idUsuario)
+//que marca un libro como no disponible y lo agrega al arreglo de libros prestados del usuario.
 
 function prestarLibro(idLibro, idUsuario) { 
     let libroEncontrado = false; 
@@ -277,8 +269,7 @@ function prestarLibro(idLibro, idUsuario) {
 } 
 
 //b.Implementamos una función devolverLibro(idLibro, idUsuario) 
-//que marque un libro como disponible y lo elimine de la lista de libros prestados del usuario.
-
+//que marca un libro como disponible y lo elimina del arreglo de libros prestados del usuario.
 
 function devolverLibro(idLibro, idUsuario) { 
     let libroEncontrado = false; 
@@ -318,7 +309,7 @@ function devolverLibro(idLibro, idUsuario) {
 }
 
 
-//5) Crear una función generarReporteLibros()
+//5) creamos una función generarReporteLibros()
 
 function generarReporteLibros(libros){
     //Cantidad total de libros.
@@ -356,9 +347,9 @@ function generarReporteLibros(libros){
 
 //6. Identificación Avanzada de libros
 //a.Implementamos una función librosConPalabrasEnTitulo() 
-// que identifique y muestre todos los libros cuyo título contiene más de una palabra 
+// que identifica y muestra todos los libros cuyo título contiene más de una palabra 
 // (no títulos que contengan números ni otros caracteres).
-//b.La función debe devolver un array con los títulos de esos libros y mostrarlo en la consola.
+//b.La función devuelve un array con los títulos de esos libros y lo muestra en la consola.
 
 function librosConPalabrasEnTitulo() { 
     let librosFiltrados = libros.filter(libro => { 
@@ -370,7 +361,7 @@ function librosConPalabrasEnTitulo() {
 } 
 
 //7) Cálculos Estadísticos
-//a.Desarrollar una función calcularEstadisticas() que utilice el objeto Math para calcular y mostrar:
+//a.Desarrollamos una función calcularEstadisticas()
 function calcularEstadisticas() { 
     //Promedio de años de publicación de los libros.
     let totalAnios = libros.reduce((sum, libro) => sum + libro.anio, 0);
@@ -400,7 +391,7 @@ function calcularEstadisticas() {
 
 
 //8. Manejo de Cadenas
-//a. Crear una función normalizarDatos() que utilice métodos de strings para:
+//a. Creamos una función normalizarDatos() que utiliza métodos de strings para:
 function normalizarDatos(){
     //Convertir todos los títulos a mayúsculas.
     let todoAMayusculas = libros.forEach(libro => { libro.titulo = libro.titulo.toUpperCase()
@@ -426,7 +417,7 @@ function normalizarDatos(){
 
 //9) Interfaz de Usuario por Consola
 //a. Implementamos una función menuPrincipal() que muestra un menú de opciones al usuario y 
-//permite interactuar con el sistema utilizando prompt().
+//permite interactuar con el sistema.
 //b.El menú incluye opciones para todas las funcionalidades anteriores.
 
 function menuPrincipal(){
@@ -489,8 +480,13 @@ function menuPrincipal(){
             mostrarTodosLosUsuarios(usuarios);
             break;
         case "7":
-            let existeUsuario = prompt ("Ingrese el email del usuaria a buscar: ");
-            buscarUsuario(existeUsuario);
+            let emailUsuario = prompt("Ingrese su email: "); 
+            let usuarioEncontrado = buscarUsuario(emailUsuario); 
+            if (usuarioEncontrado) { 
+                console.log("Usuario encontrado:", usuarioEncontrado); 
+            }else{ 
+                console.log("Usuario no encontrado.");
+            }
             break;
         case "8":
             let nombreABorrar = prompt("Ingrese el nombre del usuario a borrar: ");
@@ -538,7 +534,7 @@ function menuPrincipal(){
     }
 }
 
-//Empleamos un ciclo while para que el usuaria realize las acciones que crea necesarias, 
+//Empleamos un ciclo while para que el usuario realize las acciones que crea necesarias, 
 //es decir, para que la funcion menuPrincipal() pueda ejecutarse mas de una vez antes de acabar el programa (si se cree necesario).
 console.log("BIENVENIDO");
 let continuar = prompt("¿Desea realizar una acción? (si/no): ") === "si";
